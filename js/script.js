@@ -25,12 +25,13 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // 1. Render Navbar
     const navList = document.getElementById('nav-list');
-    if (navList) {
+    if (navList && typeof appData !== 'undefined') {
         appData.navbar.forEach(item => {
             const li = document.createElement('li');
             const a = document.createElement('a');
             a.textContent = item.name;
             a.href = item.link;
+            // The CSS class .nav-btn is applied here if type is button
             if(item.type === 'button') a.className = "nav-btn";
             li.appendChild(a);
             navList.appendChild(li);
@@ -39,10 +40,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Render Hero
     const brandText = document.getElementById('brand-text');
-    if(brandText) brandText.textContent = appData.hero.appName;
+    if(brandText && typeof appData !== 'undefined') brandText.textContent = appData.hero.appName;
 
     const heroHead = document.getElementById('hero-head');
-    if (heroHead) {
+    if (heroHead && typeof appData !== 'undefined') {
         heroHead.textContent = appData.hero.tagline;
         document.getElementById('hero-sub').textContent = appData.hero.subHeadline;
         document.getElementById('hero-main-img').src = appData.hero.heroImage;
@@ -53,7 +54,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const a = document.createElement('a');
             a.className = `store-btn ${cls || ''}`;
             a.href = data.link;
-            a.innerHTML = `<span style="font-size:1.2em">${data.icon}</span> <span>${data.text}</span>`;
+            // Basic SVG/Icon placeholder rendering
+            a.innerHTML = `<span style="font-size:1.2em; display:flex;">${data.icon}</span> <span>${data.text}</span>`;
             return a;
         };
         const dls = appData.hero.downloads;
@@ -66,20 +68,19 @@ document.addEventListener('DOMContentLoaded', () => {
         appData.techStack.forEach(tech => {
             const img = document.createElement('img');
             img.src = tech.img;
-            img.title = tech.name; // Added tooltip
+            img.title = tech.name;
             techContainer.appendChild(img);
         });
     }
 
     // 3. Render Features
     const featGrid = document.getElementById('feature-grid');
-    if (featGrid) {
+    if (featGrid && typeof appData !== 'undefined') {
         appData.features.forEach((feat, index) => {
             const div = document.createElement('div');
             div.className = 'feature-card';
-            // Note: color applied to background style of icon
             div.innerHTML = `
-                <div class="f-icon" style="background:${feat.color}">
+                <div class="f-icon" style="background:${feat.color || 'var(--bg-body)'}">
                     ${index + 1}
                 </div>
                 <h3>${feat.title}</h3>
@@ -91,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. Render Screenshots
     const ssGrid = document.getElementById('ss-grid');
-    if (ssGrid) {
+    if (ssGrid && typeof appData !== 'undefined') {
         appData.screenshots.forEach(ss => {
             const div = document.createElement('div');
             div.className = 'ss-card';
@@ -107,11 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 5. Render Contact Section
     const contactHead = document.getElementById('contact-head');
-    if(contactHead) {
+    if(contactHead && typeof appData !== 'undefined') {
         contactHead.textContent = appData.contact.heading;
         document.getElementById('contact-sub').textContent = appData.contact.subHeading;
         
-        // Render detailed contact info
         document.getElementById('contact-email').textContent = appData.contact.email;
         document.getElementById('contact-loc').textContent = appData.contact.location;
         
@@ -120,21 +120,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* --- BURGER MENU LOGIC --- */
     const hamburger = document.getElementById('hamburger');
-    
-    // CHANGED: Target the wrapper, not just the list
-    const navMenu = document.getElementById('nav-wrapper'); 
+    const navWrapper = document.getElementById('nav-wrapper'); // Matches HTML ID
 
-    if (hamburger && navMenu) {
+    if (hamburger && navWrapper) {
         hamburger.addEventListener('click', () => {
             hamburger.classList.toggle('active');
-            navMenu.classList.toggle('active');
+            navWrapper.classList.toggle('active'); // Slides the drawer in/out
         });
 
         // Close menu when a link inside it is clicked
-        navMenu.querySelectorAll('a').forEach(link => {
+        navWrapper.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', () => {
                 hamburger.classList.remove('active');
-                navMenu.classList.remove('active');
+                navWrapper.classList.remove('active');
             });
         });
     }

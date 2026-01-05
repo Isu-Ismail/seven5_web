@@ -3,19 +3,14 @@
 :root {
     /* --- LIGHT THEME --- */
     --bg-body: #ffffff;
-    /* Uniform background for sections */
     --bg-surface: #f1f5f9;
-    /* Slightly distinct for cards */
     --bg-glass: rgba(255, 255, 255, 0.9);
-
     --text-main: #0f172a;
     --text-muted: #475569;
     --text-light: #94a3b8;
-
     --primary: #2563eb;
     --primary-hover: #1d4ed8;
     --accent-glow: rgba(37, 99, 235, 0.1);
-
     --border: #e2e8f0;
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
     --shadow-md: 0 4px 20px -5px rgba(0, 0, 0, 0.1);
@@ -28,19 +23,14 @@
 [data-theme="dark"] {
     /* --- DARK THEME --- */
     --bg-body: #020617;
-    /* The main deep background for EVERYTHING */
     --bg-surface: #0f172a;
-    /* Lighter background ONLY for cards */
     --bg-glass: rgba(2, 6, 23, 0.9);
-
     --text-main: #f8fafc;
     --text-muted: #94a3b8;
     --text-light: #64748b;
-
     --primary: #3b82f6;
     --primary-hover: #60a5fa;
     --accent-glow: rgba(59, 130, 246, 0.15);
-
     --border: #1e293b;
     --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
     --shadow-md: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
@@ -63,7 +53,6 @@ body {
     transition: background-color 0.4s ease, color 0.4s ease;
     overflow-x: hidden;
     font-size: 0.95rem;
-    /* Slightly reduced base size */
 }
 
 /* --- TYPOGRAPHY --- */
@@ -77,14 +66,19 @@ body {
     align-items: center;
     gap: 12px;
     letter-spacing: -0.5px;
+    z-index: 2001; /* Ensure logo stays above mobile drawer */
 }
 
-/* Reduced Headings Size */
+.brand img {
+    height: 40px; /* Adjusted for better proportion */
+    width: auto;
+    object-fit: contain;
+}
+
 .hero-text h1 {
     font-family: var(--font-head);
     font-weight: 800;
     font-size: 3.2rem;
-    /* Reduced from 4rem */
     line-height: 1.1;
     color: var(--text-main);
     margin-bottom: 20px;
@@ -97,7 +91,6 @@ body {
     font-family: var(--font-head);
     font-weight: 700;
     font-size: 2.2rem;
-    /* Reduced from 2.8rem */
     margin-bottom: 15px;
     color: var(--text-main);
     letter-spacing: -1px;
@@ -112,13 +105,12 @@ body {
     color: var(--text-main);
 }
 
-/* --- NAVIGATION --- */
+/* --- NAVIGATION (DESKTOP & LAPTOP DEFAULT) --- */
 .navbar {
     position: fixed;
     top: 0;
     width: 100%;
     height: 70px;
-    /* Slightly slimmer nav */
     background: var(--bg-glass);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
@@ -135,20 +127,14 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
 }
 
-/* Update this rule in style.css */
-
-.brand img {
-    height: 48px; /* Increased from 28px to 48px */
-    width: auto;  /* Maintains aspect ratio */
-    object-fit: contain;
-}
-
-.nav-right {
+/* The wrapper handles the links and right-side buttons */
+.nav-wrapper {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 30px;
 }
 
 .nav-links {
@@ -163,6 +149,7 @@ body {
     font-weight: 600;
     font-size: 0.9rem;
     transition: 0.2s;
+    white-space: nowrap; /* Prevents wrapping on laptops */
 }
 
 .nav-links a:hover {
@@ -177,6 +164,8 @@ body {
     font-weight: 700 !important;
     font-family: var(--font-head);
     font-size: 0.85rem;
+    text-decoration: none;
+    white-space: nowrap;
 }
 
 .theme-btn {
@@ -191,22 +180,31 @@ body {
     align-items: center;
     justify-content: center;
     font-size: 1.1rem;
+    flex-shrink: 0;
 }
 
-[data-theme="light"] .icon-moon {
-    display: block;
-}
+[data-theme="light"] .icon-moon { display: block; }
+[data-theme="light"] .icon-sun { display: none; }
+[data-theme="dark"] .icon-moon { display: none; }
+[data-theme="dark"] .icon-sun { display: block; }
 
-[data-theme="light"] .icon-sun {
+/* Hamburger (Hidden on Desktop) */
+.hamburger {
     display: none;
+    cursor: pointer;
+    z-index: 2002;
+    background: none;
+    border: none;
 }
 
-[data-theme="dark"] .icon-moon {
-    display: none;
-}
-
-[data-theme="dark"] .icon-sun {
+.bar {
     display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    transition: all 0.3s ease-in-out;
+    background-color: var(--text-main);
+    border-radius: 2px;
 }
 
 /* --- HERO SECTION --- */
@@ -254,12 +252,10 @@ body {
     align-items: center;
     gap: 8px;
     background: var(--bg-body);
-    /* Transparent in dark mode */
     color: var(--text-main);
     border: 1px solid var(--border);
     text-decoration: none;
     padding: 10px 18px;
-    /* Reduced padding */
     border-radius: 10px;
     font-weight: 600;
     font-family: var(--font-head);
@@ -317,6 +313,8 @@ body {
 
 .hero-visual {
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 .hero-glow {
@@ -346,7 +344,6 @@ body {
 /* --- FEATURES --- */
 .features-section {
     padding: 80px 5%;
-    /* Same background as body for uniformity */
     background: var(--bg-body);
 }
 
@@ -365,7 +362,6 @@ body {
 }
 
 .feature-card {
-    /* Lighter card background in dark mode */
     background: var(--bg-surface);
     padding: 30px;
     border-radius: 20px;
@@ -649,199 +645,124 @@ code {
     border: 1px solid var(--border);
     color: var(--primary);
 }
-.privacy-section .store-btn, 
-    .privacy-section a.btn {
-        width: auto !important; /* Stop it from being full width */
-        max-width: 50px; /* Optional limit */
-        display: inline-flex;
-        margin: 0 auto; /* Center it */
-    }
 
+.privacy-section .store-btn,
+.privacy-section a.btn {
+    width: auto !important;
+    max-width: 150px;
+    display: inline-flex;
+    margin: 0 auto;
+}
 
+/* ========================================= */
+/* RESPONSIVE / MOBILE STYLES          */
+/* ========================================= */
 
-
-
-
-/* Extra Small Devices (Phones under 380px) */
-@media (max-width: 380px) {
+/* 1. Tablet & Small Laptops (900px - 1024px) */
+@media (max-width: 1100px) {
     .hero-text h1 {
-        font-size: 2rem;
+        font-size: 2.8rem;
     }
-    
-    .brand {
-        font-size: 1.2rem;
-    }
-    
-    .nav-links a {
-        font-size: 0.85rem;
-    }
-}
-
-.hamburger {
-    display: none;
-    cursor: pointer;
-    margin-left: 20px;
-    z-index: 2000; /* Ensure it stays above the menu */
-}
-
-.bar {
-    display: block;
-    width: 25px;
-    height: 3px;
-    margin: 5px auto;
-    transition: all 0.3s ease-in-out;
-    background-color: var(--text-main);
-    border-radius: 2px;
-}
-
-/* 2. Mobile State (Max-Width 900px) */
-@media (max-width: 900px) {
-
-    /* 1. Global Scaling */
-    html {
-        font-size: 14px; 
-    }
-
-    /* 2. Navbar Layout (Logo Left, Burger Right) */
-    .navbar {
-        height: 70px;
-        padding: 0;
-    }
-
-    .nav-container {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        height: 100%;
-    }
-
-    /* 3. The Sliding Drawer (Wrapper for Links + Toggle) */
-    .nav-wrapper {
-        position: fixed;
-        top: 0;
-        right: -100%; /* Hidden off-screen */
-        width: 70%;
-        max-width: 300px;
-        height: 100vh;
-        background: var(--bg-surface); /* Ensure this variable exists! */
-        display: flex;
-        flex-direction: column; /* Stack links and toggle vertically */
-        justify-content: center;
-        align-items: center;
-        gap: 30px;
-        box-shadow: -5px 0 15px rgba(0,0,0,0.1);
-        transition: 0.4s ease;
-        z-index: 1500;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border-left: 1px solid var(--border);
-    }
-
-    .nav-wrapper.active {
-        right: 0; /* Slide in */
-    }
-
-    /* 4. Link List Styling (RESET THIS) */
     .nav-links {
-        display: flex !important; /* Force display */
-        flex-direction: column;
-        width: 100%;
-        position: static; /* Reset fixed positioning */
-        background: transparent; /* Remove background */
-        height: auto; /* Reset height */
-        box-shadow: none; /* Remove shadow */
-        padding: 0;
+        gap: 15px;
     }
+    .nav-container {
+        width: 95%;
+    }
+}
+
+/* 2. Mobile Layout (Below 900px) */
+@media (max-width: 900px) {
     
-    .nav-links li {
-        list-style: none;
-        width: 200px;
-        align-items: center;
-        align-self: center;
+    /* Navbar Layout */
+    .nav-container {
+        justify-content: space-between;
     }
 
-    .nav-links a { 
-        width: 100%;
-        text-align: center;
-        padding: 15px;
-        display: block;
-        font-size: 1.3rem;
-        color: var(--text-main); /* Ensure text is visible */
-        font-weight: 600;
-    }
-
-    /* 5. Theme Button Styling */
-    .theme-btn {
-        width: 50px;
-        height: 50px;
-        font-size: 1.5rem;
-        border: 1px solid var(--border);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-    }
-
-    /* 6. Hamburger Animation */
+    /* Show Hamburger */
     .hamburger {
         display: block;
-        z-index: 2000;
-        cursor: pointer;
     }
 
+    /* Hamburger Animation */
     .hamburger.active .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
     .hamburger.active .bar:nth-child(2) { opacity: 0; }
     .hamburger.active .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-    /* 7. Page Layout Adjustments */
+    /* The Drawer */
+    .nav-wrapper {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 75%;
+        max-width: 300px;
+        height: 100vh;
+        background: var(--bg-surface);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 25px;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        z-index: 2000;
+        border-left: 1px solid var(--border);
+        padding: 20px;
+    }
+
+    .nav-wrapper.active {
+        right: 0;
+    }
+
+    /* Mobile Links */
+    .nav-links {
+        flex-direction: column;
+        width: 100%;
+        text-align: center;
+        gap: 20px;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+        display: block;
+        padding: 10px;
+    }
+
+    /* --- FIXED THE BUTTON HERE --- */
+    .nav-btn {
+        width: 80%;
+        margin: 0 auto; /* This centers the button horizontally */
+        text-align: center;
+        display: block; /* Ensures margin auto works */
+        padding: 12px;
+    }
+
+    .theme-btn {
+        width: 45px;
+        height: 45px;
+    }
+
+    /* Hero Section Fixes */
     .hero-wrapper {
-        margin-top: 100px;
         grid-template-columns: 1fr;
         text-align: center;
-    }
-    
-    .privacy-section {
-        padding-top: 100px;
+        gap: 40px;
+        margin-top: 100px;
     }
 
-    .hero-text h1 { font-size: 2.5rem; }
-    .store-btn { width: 100%; justify-content: center; }
-    .contact-container { grid-template-columns: 1fr; }
-    /* ... inside @media (max-width: 900px) ... */
-
-    /* ... inside @media (max-width: 900px) ... */
-
-    .nav-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-between; /* This pushes Logo Left and Btn Right */
-        align-items: center;
-        height: 100%;
-        padding: 0 20px;
+    .hero-text p {
+        margin-left: auto;
+        margin-right: auto;
     }
 
-    /* Remove any margins that might push it incorrectly */
-    .nav-right {
-        margin: 0; 
-        display: flex;
-        align-items: center;
-    }
-
-    /* Style the button circle */
-    .nav-back-btn {
-        display: flex;
-        align-items: center;
+    .download-group {
         justify-content: center;
-        width: 40px; 
-        height: 40px;
-        font-size: 1.8rem;
-        color: var(--text-main);
-        text-decoration: none;
-        border-radius: 50%;
-        border: 1px solid var(--border);
-        background: var(--bg-surface);
-        line-height: 1;
-        padding-bottom: 4px;
     }
     
+    .tech-strip-container {
+        justify-content: center;
+    }
+
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
 }
