@@ -136,4 +136,26 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+const contactForm = document.getElementById('contact-form');
+
+    if (contactForm && typeof appData !== 'undefined') {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault(); // Stop the page from reloading
+
+            // 1. Get values from the inputs
+            const name = document.getElementById('form-name').value;
+            const email = document.getElementById('form-email').value;
+            const message = document.getElementById('form-msg').value;
+
+            // 2. destination email (from your data.js)
+            const destEmail = appData.contact.email;
+
+            // 3. Construct the mailto link
+            const subject = `Inquiry from ${name} (Seven5)`;
+            const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${message}`;
+
+            // 4. Open Email Client
+            window.location.href = `mailto:${destEmail}?subject=${encodeURIComponent(subject)}&body=${body}`;
+        });
+    }
 });
