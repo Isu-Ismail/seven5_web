@@ -15,6 +15,7 @@
         rel="stylesheet">
 
     <script>
+        // Apply theme immediately to prevent flash
         const savedTheme = localStorage.getItem('theme') || 'light';
         document.documentElement.setAttribute('data-theme', savedTheme);
     </script>
@@ -26,8 +27,7 @@
         <div class="nav-container">
 
             <a href="index.html" class="brand">
-                <img src="./assets/logo.png" alt="Logo">
-                <span id="brand-text">Seven5</span>
+                <img src="./assets/logo.svg" alt="Logo"> <span id="brand-text">Seven5</span>
             </a>
 
             <div class="nav-right">
@@ -40,8 +40,6 @@
     </nav>
 
     <section class="privacy-section">
-
-
         <div class="policy-wrapper">
             <h2 class="section-title">Privacy Policy</h2>
             <p id="last-updated" class="last-updated"></p>
@@ -58,9 +56,9 @@
     <script src="./js/data.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-
-            // 1. Render Policy Headers
-            if (appData && appData.policy) {
+            // Check if appData exists before running
+            if (typeof appData !== 'undefined' && appData.policy) {
+                // 1. Render Policy Headers
                 document.getElementById('last-updated').textContent = `Last Updated: ${appData.policy.lastUpdated}`;
                 document.getElementById('policy-intro').innerHTML = appData.policy.intro;
 

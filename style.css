@@ -654,6 +654,39 @@ code {
     margin: 0 auto;
 }
 
+/* --- BACK BUTTON (Privacy Page) --- */
+.nav-back-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%; /* Makes it a circle */
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    color: var(--text-main);
+    font-size: 1.4rem; /* Arrow size */
+    text-decoration: none;
+    transition: all 0.2s ease;
+    padding-bottom: 3px; /* Visual fix to center the arrow vertically */
+    box-shadow: var(--shadow-sm);
+}
+
+.nav-back-btn:hover {
+    background: var(--bg-body);
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateX(-3px); /* Nudge left to indicate "Going Back" */
+    box-shadow: var(--shadow-md);
+}
+
+/* Ensure the container on the right holds the button correctly */
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
 /* ========================================= */
 /* RESPONSIVE / MOBILE STYLES          */
 /* ========================================= */
