@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./assets/favicon.ico">
+    <title>Privacy Policy - Seven5</title>
+    <link rel="stylesheet" href="./style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <script>
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+
+            <a href="index.html" class="brand">
+                <img src="./assets/logo.png" alt="Logo">
+                <span id="brand-text">Seven5</span>
+            </a>
+
+            <div class="nav-right">
+                <a href="index.html" class="nav-back-btn" aria-label="Back to Home">
+                    ←
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <section class="privacy-section">
+
+
+        <div class="policy-wrapper">
+            <h2 class="section-title">Privacy Policy</h2>
+            <p id="last-updated" class="last-updated"></p>
+            <p id="policy-intro"></p>
+
+            <div id="policy-dynamic-content" class="policy-content"></div>
+        </div>
+
+        <div class="footer-simple">
+            <p id="footer-text"></p>
+        </div>
+    </section>
+
+    <script src="./js/data.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // 1. Render Policy Headers
+            if (appData && appData.policy) {
+                document.getElementById('last-updated').textContent = `Last Updated: ${appData.policy.lastUpdated}`;
+                document.getElementById('policy-intro').innerHTML = appData.policy.intro;
+
+                // 2. Render Policy Sections
+                const policyContainer = document.getElementById('policy-dynamic-content');
+                appData.policy.sections.forEach(section => {
+                    const div = document.createElement('div');
+                    div.className = 'policy-block';
+                    div.innerHTML = `<h3>${section.title}</h3><p>${section.content}</p>`;
+                    policyContainer.appendChild(div);
+                });
+
+                // 3. Render Footer
+                document.getElementById('footer-text').textContent = appData.policy.footer;
+            }
+        });
+    </script>
+</body>
+
+</html>
