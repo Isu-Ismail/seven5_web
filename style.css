@@ -760,7 +760,7 @@ code {
         align-self: center;
     }
 
-    .nav-links a {
+    .nav-links a { 
         width: 100%;
         text-align: center;
         padding: 15px;
